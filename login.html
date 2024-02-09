@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billing System</title>
+  <!-- <script src="renderer.js"></script> -->
+  <link href="./css/loginform.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="login">
+  <h1>Login</h1>
+  <form method="post">
+    <input type="text" name="u" placeholder="Username" required="required" />
+    <input type="password" name="p" placeholder="Password" required="required" />
+    <button type="submit" id="loginBtnID" class="btn btn-primary btn-block btn-large">Let me in.</button>
+  </form>
+</div>
+
+</body>
+
+<script>
+        document.getElementById('loginBtnID').addEventListener('click', () => {
+            window.ipcRender.send('message:loginShow');
+        });
+</script>
+
+</html>
