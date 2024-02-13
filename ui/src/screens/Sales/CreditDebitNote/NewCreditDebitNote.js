@@ -35,7 +35,6 @@ const TABLE_ROWS = [
   
 ];
 
-
 const select_option = [
   {
     "text":"HTML",
@@ -57,10 +56,15 @@ const select_option = [
 
 
 
-export default function NewInvoicePage() {
+export default function NewCreditDebitNotePage({type_}) {
   useEffect(()=>{
-    document.title = "New Invoice"
-  })
+    if(type_ == "credit"){
+      document.title = "New Credit Note"
+    }
+    if(type_ == "debit"){
+      document.title = "New Debit Note"
+    }
+  },[])
   const handleSelect = (type,value)=>{
     console.log(type,value)
   }
@@ -72,15 +76,22 @@ export default function NewInvoicePage() {
           <Typography variant='h6'>Document Data</Typography>
           <hr/>
         </div>
+
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+        {type_ == "debit"?
+          <div className=' mr-12'>
+            <SelectComp label="Client name" options={select_option} isinput={false} handle={handleSelect} />
+          </div>
+          :null}
+          <div className=' mr-12'>
             <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='flex-1 mr-12'>
+          
+          <div className=' mr-12'>
             <Input variant="outlined" label="Document No" placeholder="Document No"/>
           </div>
-          <div className='flex-1 mr-12'>
-          <Input variant="outlined" label="Issue Date" placeholder="Issue Date" type='date'/>
+          <div className=' mr-12'>
+          <Input variant="outlined" label="Issue Date" placeholder="Date" type='date'/>
           </div>
         </div>
 
@@ -88,27 +99,29 @@ export default function NewInvoicePage() {
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
-            <SelectComp label="Ship To" options={select_option} isinput={false} handle={handleSelect} />
+          <div className=' mr-12'>
+            <SelectComp label="Invoice No" options={select_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='flex-1 mr-12'>
-            <Input variant="outlined" label="PO Number" placeholder="PO Number"/>
+          <div className=' mr-12'>
+            <Input variant="outlined" label="Invoice Date" placeholder="Invoice Date" type='date'/>
           </div>
-          <div className='flex-1 mr-12'>
-            <SelectComp label="Payment Term" options={select_option} isinput={false} handle={handleSelect} />
-          </div>
-        </div>
-
-
-        <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
-            <Input variant="outlined" label="PO Date" placeholder="PO Date" type='date'/>
-          </div>
-          <div className='flex-1 mr-12'>
+          {type_ == "debit"?
+          <div className=' mr-12'>
             <Input variant="outlined" label="Due Date" placeholder="Due Date" type='date'/>
           </div>
-          <div className='flex-1 mr-12'>
-            <SelectComp label="Place Of Supply" options={select_option} isinput={false} handle={handleSelect} />
+          :null
+          }   
+          <div className='mr-12'>
+            <SelectComp label="Reason" options={select_option} isinput={false} handle={handleSelect} />
+          </div>       
+        </div>
+
+
+        <div className='flex flex-row w-full justify-between my-2'>
+            
+          
+          <div className='mr-12'>
+            <SelectComp label="Place of Supply" options={select_option} isinput={false} handle={handleSelect} />
           </div>
         </div>
       </div>
@@ -130,16 +143,7 @@ export default function NewInvoicePage() {
         <div className='mr-2'>
           <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
         </div>
-        <div className=' mr-2'>
-          <Input variant="outlined" label="Discount" placeholder="Discount" />
-        </div>
-
-        <div className='mr-2'>
-          <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
-        </div>
-        <div className=' mr-2'>
-          <Input variant="outlined" label="Discount" placeholder="Discount" />
-        </div>
+        
         <div className='mr-2'>
           <SelectComp label="Tax" options={select_option} isinput={false} handle={handleSelect} />
         </div>
@@ -156,48 +160,32 @@ export default function NewInvoicePage() {
         <ProductInvoiceTable TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={TABLE_ROWS}/>
       </div>
       
-      <div className='flex w-full flex-row'>
+      <div className='flex w-full flex-row justify-between'>
         <div className=''>
-          <div className='flex items-center'>
-            <div className='mr-5'><Checkbox label='Total Quantity'/></div>
-
-            <SelectComp label="" options={select_option} isinput={true} handle={handleSelect} />
-          </div>
+          
           <div className='flex items-center'>
             <div><Checkbox label="Discount on all" /></div>
             <div><input className='border border-gray-600 w-32 mx-2' /></div>
           </div>
           <div className='flex items-center'>
             <div className='mr-7'><Checkbox label="Add Shoping and Packaeg Cost" /></div>
-            <div className=''>
-              <SelectComp label="Client" options={select_option} isinput={true} handle={handleSelect} />
-            </div>
+            <div className=''><SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} /></div>
           </div>
-        </div>
-
-        <div className=''>
           <div>
             <Checkbox label="Show CESS" />
           </div>
-          <div>
-            <Checkbox label="Subject to reverse charges" />
-          </div>
-          <div className='flex w-16'>
-            <Checkbox/>
-            
-            <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
-          </div>
         </div>
-        <div className='flex ml-10'>
-          <div className="mr-5">
+
+        <div className='flex'>
+            <div className="mr-5">
             <Textarea label="Notes" />
-          </div>
-          <div className="mr-5">
+            </div>
+            <div className="mr-5">
             <Textarea label="Private Notes" />
-          </div>
-          <div className="py-2 self-end">
+            </div>
+            <div className="py-2 self-end">
             <Button>Preview Document</Button>
-          </div>
+            </div>
         </div>
       </div>
     </div>

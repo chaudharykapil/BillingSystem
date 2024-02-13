@@ -1,6 +1,7 @@
 import { Button, Select, Textarea, Typography, Option, Input, Checkbox } from '@material-tailwind/react'
 import React, { useEffect } from 'react'
 import { ProductInvoiceTable } from '../components/ProductInvoiceTable'
+import SelectComp from '../components/SelectComp';
 
 const TABLE_HEAD = ["No", "Client Name", "Invoice No", "Issue Date","Due Date", "Amount", "Tax", "Total","Status", "Private Notes", "Emailed", "Ammount Paid","Balance","Dr/Cr","Date of payemnt","type","Action"];
  
@@ -34,10 +35,34 @@ const TABLE_ROWS = [
   
 ];
 
+
+const select_option = [
+  {
+    "text":"HTML",
+    "value":"HTML",
+  },
+  {
+    "text":"Js",
+    "value":"JS",
+  },
+  {
+    "text":"C++",
+    "value":"C++",
+  },
+  {
+    "text":"Java",
+    "value":"Java",
+  }
+]
+
+
 export default function ShowInvoicePage() {
   useEffect(()=>{
     document.title = "Show Invoice"
   })
+  const handleSelect = (type,value)=>{
+    console.log(type,value)
+  }
   return (
     <div className='flex flex-col w-screen h-screen px-5'>
 
@@ -48,13 +73,7 @@ export default function ShowInvoicePage() {
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           <div className='flex-1 mr-12'>
-          <Select variant="standard" label="client">
-            <Option key={toString(Math.random()*10000)}>Material Tailwind HTML</Option>
-            <Option key={toString(Math.random()*10000)}>Material Tailwind React</Option>
-            <Option key={toString(Math.random()*10000)}>Material Tailwind Angular</Option>
-            <Option key={toString(Math.random()*10000)}>Material Tailwind Svelte</Option>
-            <Option key={toString(Math.random()*10000)}>Material Tailwind Vue</Option>
-          </Select>
+        	<SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
           </div>
           
           <div className='flex flex-[2] mr-12'>
@@ -69,25 +88,13 @@ export default function ShowInvoicePage() {
 
         <div className='flex flex-row w-full justify-between my-2'>
           <div className='flex-1 mr-12'>
-            <Select variant="standard" label="Status">
-              <Option key={toString(Math.random()*10000)}>Material Tailwind HTML</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind React</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Vue</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Angular</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Svelte</Option>
-            </Select>
+		  	<SelectComp label="Status" options={select_option} isinput={false} handle={handleSelect} />
           </div>
           <div className='flex-1 mr-12'>
             <Input variant="outlined" label="Invoice Number" placeholder="PO Number"/>
           </div>
           <div className='flex-1 mr-12'>
-            <Select variant="standard" label="Type">
-              <Option key={toString(Math.random()*10000)}>Material Tailwind HTML</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind React</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Vue</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Angular</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Svelte</Option>
-            </Select>
+		  	<SelectComp label="Type" options={select_option} isinput={false} handle={handleSelect} />
           </div>
         </div>
 
@@ -99,13 +106,7 @@ export default function ShowInvoicePage() {
           </div>
           
           <div className='flex-1 mr-12'>
-            <Select variant="standard" label="City">
-              <Option key={toString(Math.random()*10000)}>Material Tailwind HTML</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind React</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Vue</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Angular</Option>
-              <Option key={toString(Math.random()*10000)}>Material Tailwind Svelte</Option>
-            </Select>
+		  	<SelectComp label="City" options={select_option} isinput={false} handle={handleSelect} />
           </div>
           <div className='flex-1 mr-12'>
             <Input variant="outlined" label="Quick Search" placeholder="Due Date"/>

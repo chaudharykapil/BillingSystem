@@ -908,6 +908,14 @@ video {
   margin-top: 1px;
 }
 
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -1278,6 +1286,10 @@ video {
   flex: none;
 }
 
+.flex-\[5\] {
+  flex: 5;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -1441,6 +1453,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 .gap-1 {
@@ -1653,6 +1669,10 @@ video {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
 }
 
 .rounded-l-full {

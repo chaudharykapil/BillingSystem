@@ -56,9 +56,14 @@ const select_option = [
 ]
 
 
-export default function ShowQuotationPage() {
+export default function ShowCreditDebitNotePage({type_}) {
   useEffect(()=>{
-    document.title = "Show Quotation"
+    if(type_ == "credit"){
+      document.title = "Show Credit Note"
+    }
+    if(type_ == "debit"){
+      document.title = "Show Debit Note"
+    }
   })
   const handleSelect = (type,value)=>{
     console.log(type,value)
@@ -76,10 +81,10 @@ export default function ShowQuotationPage() {
         	<SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
           </div>
           
-          <div className='flex flex-[2] mr-12'>
-          <Input variant="outlined" label="Issue From" placeholder="Issue Date" type='date'/>
+          <div className='flex  mr-12'>
+            <Input variant="outlined" label="Issue From" placeholder="Issue Date" type='date'/>
           <div className='text-center mx-5'><Typography>and</Typography></div>
-          <Input variant="outlined" label="Issue To " placeholder="Issue Date" type='date'/>
+            <Input variant="outlined" label="Issue To " placeholder="Issue Date" type='date'/>
           </div>
         </div>
 
@@ -87,18 +92,35 @@ export default function ShowQuotationPage() {
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          
+          {type_ == "credit"?
           <div className=''>
-            <Input variant="outlined" label="Quotation Number" placeholder="PO Number"/>
+            <Input variant="outlined" label="Credit Note Number" placeholder="Credit Note Number"/>
           </div>
-          <div className=' mr-12'>
-		  	<SelectComp label="Type" options={select_option} isinput={false} handle={handleSelect} />
+          :type_ == "debit"?
+          <div className=''>
+            <Input variant="outlined" label="Debit Note Number" placeholder="Debit Note Number"/>
           </div>
+          :null
+          }
+          {type_ == "debit"?
+          <div className='flex mr-12'>
+            <Input variant="outlined" label="Due From" placeholder="Issue Date" type='date'/>
+          <div className='text-center mx-5'><Typography>and</Typography></div>
+            <Input variant="outlined" label="Due To " placeholder="Issue Date" type='date'/>
+          </div>
+          :null
+          }
+
+          
         </div>
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          
+
+          <div className=' mr-12'>
+		  	    <SelectComp label="Status" options={select_option} isinput={false} handle={handleSelect} />
+          </div>
+
           <div className=' mr-12'>
             <Input variant="outlined" label="Quick Search" placeholder="Due Date"/>
           </div>
@@ -110,8 +132,12 @@ export default function ShowQuotationPage() {
       </div>
       <hr/>
       <div className='flex my-2 flex-row-reverse'>
-        <div className='mx-3'><Button>Export</Button></div>
-        <div className='mx-3'><Button>New Quotation</Button></div>
+        {type_ == "credit" ? <div className='mx-3'><Button>Export</Button></div>:null}
+        {type_ == "credit" ? <div className='mx-3'><Button>New Credit Note</Button></div>
+        :
+         type_ == "debit" ? <div className='mx-3'><Button>New Debit Note</Button></div>
+         : null
+        }
       </div>
 
       <div className='flex flex-1 mb-2 h-full'>
