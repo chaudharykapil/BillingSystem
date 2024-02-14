@@ -56,9 +56,9 @@ const select_option = [
 ]
 
 
-export default function ShowQuotationPage() {
+export default function ShowPaymentDocScreen() {
   useEffect(()=>{
-    document.title = "Show Quotation"
+    document.title = "Show Payments"
   })
   const handleSelect = (type,value)=>{
     console.log(type,value)
@@ -68,37 +68,31 @@ export default function ShowQuotationPage() {
 
       <div className='flex flex-col border border-gray-400 p-3 mb-3'>
         <div className='my-2 flex-1'>
-          <Typography variant='h6'>Search Invoice</Typography>
+          <Typography variant='h6'>Search Payment</Typography>
           <hr/>
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           <div className='mr-12'>
-        	  <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
+            <Input variant="outlined" label="client/Vendor" placeholder="Client/Vendor"/>
+          </div>
+          <div className=' mr-12'>
+		  	<SelectComp label="Type" options={select_option} isinput={false} handle={handleSelect} />
           </div>
           
-          <div className='mr-12'>
-            <Input variant="outlined" label="Issue From" placeholder="Issue Date" type='date'/>
+          <div className='flex mr-12'>
+            <Input variant="outlined" label="Paid Between" placeholder="Paid Between" type='date'/>
             <div className='text-center mx-5'><Typography>and</Typography></div>
-            <Input variant="outlined" label="Issue To " placeholder="Issue Date" type='date'/>
+            <Input variant="outlined" label="" placeholder="" type='date'/>
           </div>
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           
           <div className=''>
-            <Input variant="outlined" label="Quotation Number" placeholder="PO Number"/>
+            <Input variant="outlined" label="Number" placeholder="Number"/>
           </div>
-          <div className=' mr-12'>
-		  	<SelectComp label="Type" options={select_option} isinput={false} handle={handleSelect} />
-          </div>
-        </div>
-
-
-        <div className='flex flex-row w-full justify-between my-2'>
           
-          <div className=' mr-12'>
-            <Input variant="outlined" label="Quick Search" placeholder="Due Date"/>
-          </div>
         </div>
+
         <div className='flex justify-center'>
             <div className='mx-3'><Button>Search</Button></div>
             <div className='mx-3'><Button>Reset</Button></div>
@@ -107,14 +101,13 @@ export default function ShowQuotationPage() {
       <hr/>
       <div className='flex my-2 flex-row-reverse'>
         <div className='mx-3'><Button>Export</Button></div>
-        <div className='mx-3'><Button>New Quotation</Button></div>
+        <div className='mx-3'><Button>New Payment</Button></div>
       </div>
 
       <div className='flex flex-1 mb-2 h-full'>
         <ProductInvoiceTable TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={TABLE_ROWS} />
       </div>
-      
-      
+
     </div>
   )
 }

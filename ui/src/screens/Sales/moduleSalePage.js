@@ -5,6 +5,9 @@ import NewQuotationPage from './Quotation/NewQuotationPage'
 import ShowQuotationPage from './Quotation/ShowQuotationPage'
 import NewCreditDebitNotePage from './CreditDebitNote/NewCreditDebitNote'
 import ShowCreditDebitNotePage from './CreditDebitNote/ShowCreditDebitNote'
+import NewPaymentDocScreen from './PaymentDocument/NewPaymentDocScreen'
+import ShowPaymentDocScreen from './PaymentDocument/ShowPaymentDocScreen'
+import ShowClientPage from './Client/ShowClientPage'
 
 export default function ModuleSalePage({page}) {
     const [currentPage,setCurrentPage] = useState(<></>)
@@ -35,6 +38,14 @@ export default function ModuleSalePage({page}) {
             case "showdebitnote":
                 setCurrentPage(<ShowCreditDebitNotePage type_="debit" />)
                 break
+            case "newpaymentnote":
+                setCurrentPage(<NewPaymentDocScreen />)
+                break
+            case "showpaymentnote":
+                setCurrentPage(<ShowPaymentDocScreen />)
+                break
+            case "showclient":
+                setCurrentPage(<ShowClientPage />)
                 
             
         }
@@ -51,7 +62,9 @@ export default function ModuleSalePage({page}) {
                 <option value="showcreditnote">Show Credit Note</option>
                 <option value="newdebitnote">New Debit Note</option>
                 <option value="showdebitnote">Show Debit Note</option>
-                
+                <option value="newpaymentnote">New Payment Notes</option>
+                <option value="showpaymentnote">Show Payment Notes</option>
+                <option value="showclient">Clients</option>
             </select>
         </div>
         <div>

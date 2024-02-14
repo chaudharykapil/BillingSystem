@@ -72,14 +72,14 @@ export default function NewQuotationPage() {
           <hr/>
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Document No" placeholder="Document No"/>
           </div>
-          <div className='flex-1 mr-12'>
-          <Input variant="outlined" label="Issue Date" placeholder="Date" type='date'/>
+          <div className='mr-12'>
+            <Input variant="outlined" label="Issue Date" placeholder="Date" type='date'/>
           </div>
         </div>
 
@@ -87,26 +87,26 @@ export default function NewQuotationPage() {
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <SelectComp label="Ship to" options={select_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <Input variant="outlined" label="PO Number" placeholder="PO Number"/>
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <SelectComp label="PO Date" options={select_option} isinput={true} handle={handleSelect} />
           </div>
         </div>
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Project" placeholder="Project" type=''/>
           </div>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             
           </div>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <SelectComp label="Place of Supply" options={select_option} isinput={false} handle={handleSelect} />
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function NewQuotationPage() {
           <SelectComp label="Tax" options={select_option} isinput={false} handle={handleSelect} />
         </div>
         
-        <div className='flex-1'>
+        <div className='mr-2'>
           <Button>+</Button>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default function NewQuotationPage() {
       </div>
       
       <div className='flex w-full flex-row'>
-        <div className='flex-[6]'>
+        <div className=''>
           
           <div className='flex items-center'>
             <div><Checkbox label="Discount on all" /></div>
@@ -160,7 +160,7 @@ export default function NewQuotationPage() {
           </div>
         </div>
 
-        <div className='flex-[4]'>
+        <div className=''>
           <div>
             <Checkbox label="Show CESS" />
           </div>
@@ -172,14 +172,16 @@ export default function NewQuotationPage() {
             <SelectComp label="" options={select_option} isinput={false} handle={handleSelect} />
           </div>
         </div>
-        <div className="mr-5">
-          <Textarea label="Notes" />
-        </div>
-        <div className="mr-5">
-          <Textarea label="Private Notes" />
-        </div>
-        <div className="py-2 self-end">
-          <Button>Preview Document</Button>
+        <div>
+          <div className="mr-5">
+            <Textarea label="Notes" />
+          </div>
+          <div className="mr-5">
+            <Textarea label="Private Notes" />
+          </div>
+          <div className="py-2 self-end">
+            <Button>Preview Document</Button>
+          </div>
         </div>
       </div>
     </div>
