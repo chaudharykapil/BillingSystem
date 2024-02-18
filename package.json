@@ -11,10 +11,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.11.19",
     "electron": "^28.2.2",
     "electron-is-dev": "^3.0.1"
   },
   "dependencies": {
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.0.3",
+    "reflect-metadata": "^0.2.1",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
   }
 }
