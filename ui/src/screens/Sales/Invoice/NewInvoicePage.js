@@ -73,13 +73,13 @@ export default function NewInvoicePage() {
           <hr/>
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <Input variant="outlined" label="Document No" placeholder="Document No"/>
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
           <Input variant="outlined" label="Issue Date" placeholder="Issue Date" type='date'/>
           </div>
         </div>
@@ -88,64 +88,71 @@ export default function NewInvoicePage() {
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <SelectComp label="Ship To" options={select_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <Input variant="outlined" label="PO Number" placeholder="PO Number"/>
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <SelectComp label="Payment Term" options={select_option} isinput={false} handle={handleSelect} />
           </div>
         </div>
 
 
         <div className='flex flex-row w-full justify-between my-2'>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <Input variant="outlined" label="PO Date" placeholder="PO Date" type='date'/>
           </div>
-          <div className='flex-1 mr-12'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Due Date" placeholder="Due Date" type='date'/>
           </div>
-          <div className='flex-1 mr-12'>
+          <div className=' mr-12'>
             <SelectComp label="Place Of Supply" options={select_option} isinput={false} handle={handleSelect} />
           </div>
         </div>
       </div>
       <hr/>
 
-      <div className='flex my-2 w-screen'>
-        <div className='mr-2'>
-          <SelectComp label="Product" options={select_option} isinput={false} handle={handleSelect} />
+      <div className='my-2 '>
+        <div className='flex justify-between my-2'>
+          <div className='mr-2'>
+            <SelectComp label="Product" options={select_option} isinput={false} handle={handleSelect} />
+          </div>
+          <div className='mr-2'>
+            <Input variant="outlined" label="Description" placeholder="Description" />
+          </div>
+          <div className='mr-2'>
+            <SelectComp label="UoM" options={select_option} isinput={false} handle={handleSelect} />
+          </div>
+          <div className='mr-2'>
+            <Input variant="outlined" label="Qty" placeholder="Qty" />
+          </div>
+          <div className='mr-2'></div>
+          <div className='mr-2'></div>
         </div>
-        <div className='mr-2'>
-          <Input variant="outlined" label="Description" placeholder="Description" />
-        </div>
-        <div className='mr-2'>
-          <SelectComp label="UoM" options={select_option} isinput={false} handle={handleSelect} />
-        </div>
-        <div className='mr-2'>
-          <Input variant="outlined" label="Qty" placeholder="Qty" />
-        </div>
-        <div className='mr-2'>
-          <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
-        </div>
-        <div className=' mr-2'>
-          <Input variant="outlined" label="Discount" placeholder="Discount" />
-        </div>
+        <div className='flex justify-between'>
+          
+          <div className='mr-2'>
+            <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
+          </div>
+          <div className=' mr-2'>
+            <Input variant="outlined" label="Discount" placeholder="Discount" />
+          </div>
 
-        <div className='mr-2'>
-          <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
-        </div>
-        <div className=' mr-2'>
-          <Input variant="outlined" label="Discount" placeholder="Discount" />
-        </div>
-        <div className='mr-2'>
-          <SelectComp label="Tax" options={select_option} isinput={false} handle={handleSelect} />
-        </div>
-        
-        <div className='flex-1'>
-          <Button>+</Button>
+          <div className='mr-2'>
+            <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
+          </div>
+          <div className=' mr-2'>
+            <Input variant="outlined" label="Discount" placeholder="Discount" />
+          </div>
+          <div className='mr-2'>
+            <SelectComp label="Tax" options={select_option} isinput={false} handle={handleSelect} />
+          </div>
+          
+          <div className='mr-2'>
+            <Button>+</Button>
+          </div>
         </div>
       </div>
 
