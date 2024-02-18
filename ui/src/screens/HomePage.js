@@ -95,32 +95,51 @@ export default function HomePage() {
     {
       "title":"Invoice",
       "onClick":()=>{api_show_invoice()}
+
     }
   ]
   return (
-    <div className='flex flex-row h-screen w-screen'>
-      <div className='flex flex-col w-1/4 h-full'>
-        <MyAccordion title="Sales Report" children={sales_option} />
-      </div>
-      <div className='flex flex-1 flex-col justify-center items-center'>
-
-        <div className='flex m-5'>  
-          <NewVoiceCard onClick = {api_new_invoice} />
-        </div>
-
-        <div className='flex m-5'>
-          <ShortCutCard title="Quotation" color="green" />
-          <ShortCutCard title="Performa Invoice" color="green"/>
-          <ShortCutCard title="Bill of Supply" color="green"/>
-        </div>
-        <div className='flex m-5'>
-          <ShortCutCard title="Dilivery Note/Challan" color="green"/>
-          <ShortCutCard title="Purchase Order" color="green"/>
-          <ShortCutCard title="Bill" color="green"/>
+    <div className="flex flex-col h-screen w-screen bg-blue-100">
+      <div className="flex flex-row h-full">
+        {/* Sidebar */}
+        <div className="flex flex-col w-1/4 bg-white shadow-lg">
+          <div className="p-4 bg-blue-500 text-white text-lg font-semibold">Sales Report</div>
+          <div className="flex flex-col space-y-2 p-4">
+            {/* Accordion */}
+            <MyAccordion title="Sales Report" children={sales_option} />
+          </div>
         </div>
         
-
+        {/* Main Content */}
+        <div className="flex flex-1 flex-col justify-center items-center">
+          {/* New Invoice Card */}
+          <div className="m-5">
+            <NewVoiceCard onClick={api_new_invoice} />
+          </div>
+          
+          {/* Shortcut Cards */}
+          <div className="flex justify-between m-5">
+            {/* Left Side */}
+            <div className="flex flex-col mr-5">
+              <ShortCutCard title="Quotation" color="blue" />
+              <div className="my-2 border-b border-blue-500"></div>
+              <ShortCutCard title="Performa Invoice" color="blue" />
+              <div className="my-2 border-b border-blue-500"></div>
+              <ShortCutCard title="Bill of Supply" color="blue" />
+            </div>
+            {/* Right Side */}
+            <div className="flex flex-col">
+              <ShortCutCard title="Delivery Note/Challan" color="blue" />
+              <div className="my-2 border-b border-blue-500"></div>
+              <ShortCutCard title="Purchase Order" color="blue" />
+              <div className="my-2 border-b border-blue-500"></div>
+              <ShortCutCard title="Bill" color="blue" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
+  
+  
 }
