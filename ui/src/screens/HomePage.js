@@ -10,7 +10,6 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
 import { api_new_invoice, api_show_invoice } from '../utils/PageApi';
 function Icon({ id, open }) {
     return (
@@ -88,7 +87,6 @@ function ShortCutCard({title,onClick,color}){
 }
 
 export default function HomePage() {
-  const navigator = useNavigate()
   useEffect(()=>{
     document.title = "Billing System"
   })

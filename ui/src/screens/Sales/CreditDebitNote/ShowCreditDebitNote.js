@@ -69,7 +69,7 @@ export default function ShowCreditDebitNotePage({type_}) {
     console.log(type,value)
   }
   return (
-    <div className='flex flex-col w-screen h-screen px-5'>
+    <div className='flex flex-col w-full h-full px-5'>
 
       <div className='flex flex-col border border-gray-400 p-3 mb-3'>
         <div className='my-2 flex-1'>
