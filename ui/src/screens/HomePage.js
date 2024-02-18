@@ -95,11 +95,13 @@ export default function HomePage() {
     {
       "title":"Invoice",
       "onClick":()=>{api_show_invoice()}
+
     }
   ]
   return (
     <div className='flex flex-row h-screen w-screen'>
       <div className='flex flex-col w-1/4 h-full'>
+        <DIV></DIV>
         <MyAccordion title="Sales Report" children={sales_option} />
       </div>
       <div className='flex flex-1 flex-col justify-center items-center'>
