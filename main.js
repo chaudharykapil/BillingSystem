@@ -116,3 +116,8 @@ ipcMain.handle("add-new-company",(ev,args)=>{
 		return companyrepo.insert(company).then((ve)=>{return "ok"},(e)=>{console.log(err);return "error"})
 	},(err)=>{console.log(err);return "error"})
 })
+
+ipcMain.handle("company-sign-in",(ev,args)=>{
+	var companyrepo = DBManager.getRepository(CompanyModel)
+	return companyrepo.findOneBy({email:args.email,password:args.password})
+})

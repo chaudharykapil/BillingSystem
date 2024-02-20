@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card, CardBody, Checkbox, Input, Typography } from "@material-tailwind/react";
 import SelectComp from "./Sales/components/SelectComp";
 const {ipcRenderer} = window.require("electron")
@@ -55,13 +55,16 @@ function AddCompanyDetails() {
       console.log(v)
       if(v == "ok"){
         alert("Signup Done")
+        window.location.href = "/signin"
       }
       else{
         alert("Unexpected Error")
       }
     })
-    
   }
+  useEffect(()=>{
+    document.title = "Sign Up"
+  })
   return (
     <div className="flex h-screen w-screen">
       <Card className="w-full">

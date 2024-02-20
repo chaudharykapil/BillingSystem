@@ -33,7 +33,7 @@ function MyAccordion({title,children}) {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
  
   return (
-    <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
+    <Accordion className='' open={open === 1} icon={<Icon id={1} open={open} />}>
         <AccordionHeader className='p-5' onClick={() => handleOpen(1)}>{title}</AccordionHeader>
         <AccordionBody>
           <List>
@@ -75,13 +75,12 @@ function NewVoiceCard({onClick}){
 
 function ShortCutCard({title,onClick,color}){
   return(
-    <Card className="mx-1 w-60 text-center" onClick={onClick} color={color}>
+    <Card className="mx-1 w-60 h-24 text-center" onClick={onClick} color={color}>
       <CardBody>
         <Typography variant="h5" color="blue-gray"  className="mb-2">
           + {title}
         </Typography>
       </CardBody>
-      
     </Card>
   )
 }
@@ -101,24 +100,20 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-blue-100">
+    <div className="flex  h-screen w-screen bg-blue-100 p-5">
       {/* Sidebar */}
-      <div className="flex flex-col w-1/4 bg-white shadow-lg">
-        <div class="container">
-          <div class = "Sales Report">
-          </div>
-        </div>
-        <div className="p-4 bg-blue-500 text-white text-lg font-semibold mb-2">Sales Report</div>
-        <div className="flex flex-col space-y-2 p-4">
+      <div className="flex flex-col w-1/4 h-full">
+        <div className="flex flex-col space-y-2 p-4 shadow-lg">
           {/* Accordion */}
           <MyAccordion title="Sales Report" children={sales_option} />
+          
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col w-full px-5 justify-center items-center">
         {/* Buttons Row */}
-        <div className="flex justify-center w-screen m-1">
+        <div className="flex w-full m-1 justify-between">
           <Button color="lightBlue" className="mr-0 border-none">Unpaid Involls: </Button>
           <Button color="lightBlue" className="mr-0 border-none">Overdue Quotes: </Button>
           <Button color="lightBlue" className="mr-0 border-none">Low Stock Items: </Button>

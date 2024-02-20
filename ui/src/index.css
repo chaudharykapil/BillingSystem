@@ -1069,6 +1069,10 @@ video {
   height: 100vh;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -1087,6 +1091,10 @@ video {
 
 .max-h-\[48px\] {
   max-height: 48px;
+}
+
+.max-h-24 {
+  max-height: 6rem;
 }
 
 .min-h-\[100px\] {
@@ -2565,6 +2573,11 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .\!pr-7 {

@@ -10,7 +10,8 @@ function App() {
     
       <Routes >
         
-          <Route path="/" element={<Signup />} />
+          <Route path="/" element={<SignIn />} />
+          <Route path="/signup" element = {<Signup />} /> 
           <Route path="/dashboard" element = {<HomePage />} />
           <Route path="/sales/invoice/new" element = {<ModuleSalePage page = "newinvoice" /> }/> 
           <Route path="/sales/invoice/show" element = {<ModuleSalePage page = "showinvoice" /> }/>
