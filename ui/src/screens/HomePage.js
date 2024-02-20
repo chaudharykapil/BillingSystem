@@ -104,7 +104,11 @@ export default function HomePage() {
     <div className="flex flex-col h-screen w-screen bg-blue-100">
       {/* Sidebar */}
       <div className="flex flex-col w-1/4 bg-white shadow-lg">
-        <div className="p-4 bg-blue-500 text-white text-lg font-semibold">Sales Report</div>
+        <div class="container">
+          <div class = "Sales Report">
+          </div>
+        </div>
+        <div className="p-4 bg-blue-500 text-white text-lg font-semibold mb-2">Sales Report</div>
         <div className="flex flex-col space-y-2 p-4">
           {/* Accordion */}
           <MyAccordion title="Sales Report" children={sales_option} />
@@ -112,13 +116,13 @@ export default function HomePage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1 flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         {/* Buttons Row */}
-        <div className="flex justify-between w-full m-5">
-          <Button color="lightBlue" className="mr-2">Unpaid Involls: </Button>
-          <Button color="lightBlue" className="mr-2">Overdue Quotes: </Button>
-          <Button color="lightBlue" className="mr-2">Low Stock Items: </Button>
-          <Button color="lightBlue">Unpaid Bills: </Button>
+        <div className="flex justify-center w-screen m-1">
+          <Button color="lightBlue" className="mr-0 border-none">Unpaid Involls: </Button>
+          <Button color="lightBlue" className="mr-0 border-none">Overdue Quotes: </Button>
+          <Button color="lightBlue" className="mr-0 border-none">Low Stock Items: </Button>
+          <Button color="lightBlue" className="mr-0 border-none">Unpaid Bills: </Button>
         </div>
 
         {/* New Invoice Card */}
@@ -127,9 +131,9 @@ export default function HomePage() {
         </div>
 
         {/* Shortcut Cards */}
-        <div className="flex justify-between m-5">
+        <div className="flex justify-between m-1">
           {/* Left Side */}
-          <div className="flex flex-col mr-5">
+          <div className="flex flex-col mr-1">
             <ShortCutCard title="Quotation" color="blue" />
             <div className="my-2 border-b border-blue-500"></div>
             <ShortCutCard title="Performa Invoice" color="blue" />
@@ -149,3 +153,4 @@ export default function HomePage() {
     </div>
   );
 }
+
