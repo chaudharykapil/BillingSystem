@@ -1,4 +1,4 @@
-const { EntitySchema, EntitySchemaOptions } = require("typeorm");
+const { EntitySchema } = require("typeorm");
 
 const CompanyModel = new EntitySchema({
     name:"company",
@@ -18,24 +18,25 @@ const CompanyModel = new EntitySchema({
             nullable:false,
             unique:true
         },
+        
         tin:{
             type:String,
-            nullable:false,
+            nullable:true,
             unique:true
         },
         vat:{
             type:String,
-            nullable:false,
+            nullable:true,
             unique:true
         },
         service_tax_no:{
             type:String,
-            nullable:false,
+            nullable:true,
             unique:true
         },
         cst_no:{
             type:String,
-            nullable:false,
+            nullable:true,
             unique:true
         },
         phone:{
@@ -56,7 +57,22 @@ const CompanyModel = new EntitySchema({
         additional_detail:{
             type:String,
             nullable:true
-            
+        },
+        password:{
+            type:String,
+            nullable:false,
+            default:"123"
+        },
+        addressid:{
+            type:Number,
+            nullable:false
+        }
+        
+    },
+    relations:{
+        addressid:{
+            type:"one-to-one",
+            target:"address"
         }
     }
 })

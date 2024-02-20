@@ -1,59 +1,118 @@
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { DBManager } = require('./utils/DBManager');
-const {CompanyModel}  = require("./models/Company")
+const {CompanyModel}  = require("./models/Company");
+const { Client } = require('./models/Client');
+const { Address } = require('./models/Address');
 
 let mainWindow;
 function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      worldSafeExecuteJavaScript: true,
-      contextIsolation: false, 
-    },
-    title:"Billing System"
-  });
-  const startURL = 'http://localhost:3000'
-  if(!DBManager.isInitialized){
-    DBManager.initialize().then(v=>{
-      mainWindow.loadURL(startURL);
-    })
-  }
-  mainWindow.on('closed', () => (mainWindow = null));
+	mainWindow = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			nodeIntegration: true,
+			worldSafeExecuteJavaScript: true,
+			contextIsolation: false, 
+		},
+		title:"Billing System"
+	});
+	const startURL = 'http://localhost:3000'
+	if(!DBManager.isInitialized){
+		DBManager.initialize().then(v=>{
+			mainWindow.loadURL(startURL);
+		})
+	}
+	mainWindow.on('closed', () => (mainWindow = null));
 }
 
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+	if (process.platform !== 'darwin') {
+		app.quit();
+	}
 });
 
 app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
+	if (mainWindow === null) {
+		createWindow();
+	}
 });
 
-ipcMain.on("add-new-company",(ev,args)=>{
-	var repo = DBManager.getRepository(CompanyModel)
-	console.log(args)
-	const company = {
-		companyname:"ABC",
-		companypan:"CNJPC6964P",
-		tin:"1233134223",
-		vat:"2332erf3423",
-		service_tax_no:"23e43rfft65",
-		cst_no:"998878",
-		phone:"90867342",
-		email:"abc@gmail.com",
-		website:"www.abc.com",
+ipcMain.handle("add-new-client",(ev,args)=>{
+	var clientrepo = DBManager.getRepository(Client)
+	var addressrepo = DBManager.getRepository(Address)
+	let shipping_address = {}
+	const client = {
+		client_name:args.name,
+		contact_name:args.contact_name,
+		phone:args.phone,
+		email:args.email,
+		gstin:args.gstin,
+		tin:args.tin,
+		pan:args.pan,
+		vat:args.vat,
+		private_client_detail:args.private_detail,
+		other_client_detail:args.other_detail,
+		vendor:args.vendor,
+		sez:args.sez,
 	}
-	repo.insert(company).then(v=>{
-		console.log("done",v)
+	let billing_address = {
+		address:args.billing_address,
+		city:args.city,
+		state:args.state,
+		pincode:args.pincode,
+		country:args.country,
+	}
+	if(args["shipping_address"]){
+		shipping_address = {
+			name:args.shiping_name,
+			address:args.shiping_address,
+			city:args.shiping_city,
+			state:args.shiping_state,
+			pincode:args.shiping_pincode,
+			country:args.shiping_country,
+		}
+	}
+
+	return addressrepo.insert(billing_address).then(v=>{
+		client.billing_address = v.identifiers[0].id
+		if(args["shipping_address"]){
+			addressrepo.insert(shipping_address).then(v=>{
+				client.shiping_address = v.identifiers[0].id
+			})
+		}
+	}).finally(()=>{
+		clientrepo.insert(client).then((ev)=>{return "ok"},(err)=>{console.log(err);return "error"})
 	})
-	ev.reply = "done"
+})
+
+ipcMain.handle("add-new-company",(ev,args)=>{
+	var companyrepo = DBManager.getRepository(CompanyModel)
+	var addressrepo = DBManager.getRepository(Address)
+	var company = {
+		companyname:args.company_name,
+		companypan:args.pan,
+		tin:args.tin,
+		vat:args.vat,
+		service_tax_no:args.service_tax,
+		cst_no:args.cst_no,
+		phone:args.phone,
+		email:args.email,
+		website:args.website,
+		additional_detail:args["add_detail"],
+	}
+	var address = {
+		address:args.address,
+		city:args.city,
+		state:args.state,
+		pincode:args.pincode,
+		country:args.country,
+	}
+	return addressrepo.insert(address).then((v)=>{
+		company["addressid"] = v.identifiers[0].id
+		return companyrepo.insert(company).then((ve)=>{return "ok"},(e)=>{console.log(err);return "error"})
+	},(err)=>{console.log(err);return "error"})
 })

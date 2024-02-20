@@ -1,4 +1,4 @@
-const { EntitySchema, OneToMany } = require("typeorm");
+const { EntitySchema } = require("typeorm");
 
 const Address = new EntitySchema({
     name:"address",
@@ -7,6 +7,10 @@ const Address = new EntitySchema({
             type:Number,
             primary:true,
             generated:true
+        },
+        name:{
+            type:String,
+            nullable:true
         },
         address:{
             type:String,
@@ -24,13 +28,12 @@ const Address = new EntitySchema({
             type:String,
             nullable:false
         },
-    },
-    relations:{
-        companyid:{
-            type:"one-to-one",
-            target:"company"
+        country:{
+            type:String,
+            nullable:false
         }
-    }
+    },
+    
 })
 
 module.exports = {Address}
