@@ -1,41 +1,11 @@
 
 import { Button, Select, Textarea, Typography, Option, Input, Checkbox } from '@material-tailwind/react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProductInvoiceTable } from '../components/ProductInvoiceTable'
 import SelectComp from '../components/SelectComp';
 import { api_new_client } from '../../../utils/PageApi';
-
-const TABLE_HEAD = ["No", "Client Name", "Invoice No", "Issue Date","Due Date", "Amount", "Tax", "Total","Status", "Private Notes", "Emailed", "Ammount Paid","Balance","Dr/Cr","Date of payemnt","type","Action"];
- 
-const TABLE_ROWS = [
-  
-  {
-    name: "Laurent Perrier",
-    job: "Executive",
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  
-];
+const {ipcRenderer} = window.require("electron")
+const TABLE_HEAD = ["S.No", "Client Name", "Contact Name", "Email","GSTIN", "PAN", "Phone","TIN", "VAT", "Client Detail","Action"];
 
 
 const select_option = [
@@ -59,9 +29,32 @@ const select_option = [
 
 
 export default function ShowClientPage() {
+  const [clients,setClients] = useState([])
   useEffect(()=>{
     document.title = "Show Clients"
-  })
+    var res = ipcRenderer.invoke("get-all-client")
+    res.then((v)=>{
+      let temp = []
+      console.log(v)
+      v.map((c,idx)=>{
+        temp.push(
+          {
+            client_name:c.client_name,
+            contact_name:c.contact_name,
+            email:c.email,
+            gstin:c.gstin,
+            pan:c.pan,
+            phone:c.phone,
+            tin:c.tin,
+            vat:c.vat,
+            detail:c.other_client_detail,
+          }
+        )
+      })
+      setClients(temp)
+    })
+  },[])
+
   const handleSelect = (type,value)=>{
     console.log(type,value)
   }
@@ -75,13 +68,13 @@ export default function ShowClientPage() {
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           <div className=' mr-12'>
-		  	<SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
+		  	    <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
           </div>
           <div className='mr-12'>
             <Input variant="outlined" label="Email" placeholder="Email"/>
           </div>
           <div className=' mr-12'>
-		  	<SelectComp label="City" options={select_option} isinput={false} handle={handleSelect} />
+            <Input variant="outlined" label="City" placeholder="city"/>
           </div>
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
@@ -95,7 +88,6 @@ export default function ShowClientPage() {
           <div className='mr-12'>
             <Input variant="outlined" label="GSTIN" placeholder="GSTIN"/>
           </div>
-          
         </div>
 
         <div className='flex justify-center'>
@@ -111,7 +103,7 @@ export default function ShowClientPage() {
       </div>
 
       <div className='flex flex-1 mb-2 h-full'>
-        <ProductInvoiceTable TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={TABLE_ROWS} />
+        <ProductInvoiceTable TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={clients} />
       </div>
 
     </div>

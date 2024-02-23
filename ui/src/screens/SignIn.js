@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, Input, Typography } from "@material-tailwind/react";
+import {useCookies} from "react-cookie"
 const {ipcRenderer} = window.require("electron")
 
 function SignIn() {
-  useEffect(()=>{
-    document.title = "Sign In"
-  })
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
-  const siginhandle = ()=>{
-    var res = ipcRenderer.invoke("company-sign-in",{email:email,password:password})
-    if(res){
+  const [cookies, setCookie] = useCookies(['user']);
+  useEffect(()=>{
+    if(cookies["user"]){
       window.location.href = "/dashboard"
     }
+    document.title = "Sign In"
+  })
+  const siginhandle = ()=>{
+    var res = ipcRenderer.invoke("company-sign-in",{email:email,password:password})
+    console.log(res)
+    res.then(v=>{
+      if(v){
+        console.log(v)
+        setCookie("user",v.companyid)
+        window.location.href = "/dashboard"
+
+      }
+    })
   }
   return (
     <div className="flex h-screen items-center justify-center bg-blue-500"> {/* Set the background color to blue */}

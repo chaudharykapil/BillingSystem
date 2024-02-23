@@ -1,6 +1,7 @@
 import { Button, Checkbox, Input, Textarea } from '@material-tailwind/react'
 import React, { useEffect, useState } from 'react'
 import SelectComp from '../components/SelectComp'
+import { getAllCountry, getStates } from '../../../utils/AddressDataApi'
 const {ipcRenderer} = window.require("electron")
 const select_option = [
     {
@@ -25,6 +26,8 @@ let client_detail = {}
 
 function DifferentAddress(){
 
+    const [state_option,setState] = useState([])
+    const [country_option,setCountry] = useState(getAllCountry())
     
 
     return(
@@ -45,8 +48,9 @@ function DifferentAddress(){
             </div>
             <div className='flex mb-5'>
                 <div className='mr-5'><Input variant='outlined' label='Pincode' onChange={v=>{client_detail["shiping_pincode"] = v.target.value}}  /></div>
-                <div className='mr-5'><SelectComp label="State" isinput={false} options={select_option} handle={(type,value)=>{
+                <div className='mr-5'><SelectComp label="Country" isinput={false} options={select_option} handle={(type,value)=>{
                     client_detail["shiping_country"] = value
+                    
                 }} />
                 </div>
                 
@@ -57,12 +61,23 @@ function DifferentAddress(){
 
 export default function NewClientPage() {
     const [shipping_addr,setShip_addr] = useState(false)
+    const [state_option,set_State] = useState([])
+    const [country_option,setCountry] = useState(getAllCountry())
     useEffect(()=>{
         document.title = "New Client"
     },)
     const addClient = ()=>{
         console.log(client_detail)
-        ipcRenderer.send("add-new-client",client_detail)
+        var res = ipcRenderer.invoke("add-new-client",client_detail)
+        console.log(res)
+        res.then((v)=>{
+            if(v == "ok"){
+                alert("Client Added Succesfully")
+            }
+            else{
+                alert("Unexpectrd Error Occur")
+            }
+        })
     }
   return (
     <div className='flex w-full h-full p-5 border-2 border-black justify-between'>
@@ -95,17 +110,20 @@ export default function NewClientPage() {
                 <Textarea variant='outlined' onChange={v=>{client_detail["billing_address"] = v.target.value}} label='Billing Address' />
             </div>
             <div className='flex mb-5'>
-                <SelectComp label="City" isinput={false} options={select_option} handle={(type,value)=>{
-                    client_detail["city"] = value
+                <SelectComp label="City" isinput={false} options={select_option} handle={(values)=>{
+                    client_detail["city"] = values.select
                 }} />
-                <SelectComp label="State" isinput={false} options={select_option} handle={(type,value)=>{
-                    client_detail["state"] = value
+                <SelectComp label="State" isinput={false} options={state_option} handle={(values)=>{
+                    client_detail["state"] = values.select
                 }} />
             </div>
             <div className='flex mb-5'>
                 <div className='mr-5'><Input variant='outlined' onChange={v=>{client_detail["pincode"] = v.target.value}} label='Pincode' /></div>
-                <div className='mr-5'><SelectComp label="Country" isinput={false} options={select_option} handle={(type,value)=>{
-                    client_detail["country"] = value
+                <div className='mr-5'><SelectComp label="Country" isinput={false} options={country_option} handle={(values)=>{
+                    client_detail["country"] = values.select
+                    console.log(getStates(values.select))
+
+                    set_State(getStates(values.select))
                 }} />
                 </div>
             </div>
@@ -113,7 +131,6 @@ export default function NewClientPage() {
                 <div className='mr-5'><Input variant='outlined' onChange={v=>{client_detail["other_detail"] = v.target.value}} label='Other Client Detail' /></div>
                 <div className='mr-5'><Input variant='outlined' onChange={v=>{client_detail["private_detail"] = v.target.value}} label='Private Client Detail' /></div>
             </div>
-            
         </div>
         <div className=''>
             <div>

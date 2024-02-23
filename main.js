@@ -5,6 +5,7 @@ const { DBManager } = require('./utils/DBManager');
 const {CompanyModel}  = require("./models/Company");
 const { Client } = require('./models/Client');
 const { Address } = require('./models/Address');
+const { Product } = require('./models/Product');
 
 let mainWindow;
 function createWindow() {
@@ -45,6 +46,7 @@ ipcMain.handle("add-new-client",(ev,args)=>{
 	var clientrepo = DBManager.getRepository(Client)
 	var addressrepo = DBManager.getRepository(Address)
 	let shipping_address = {}
+	console.log(args)
 	const client = {
 		client_name:args.name,
 		contact_name:args.contact_name,
@@ -82,10 +84,11 @@ ipcMain.handle("add-new-client",(ev,args)=>{
 		if(args["shipping_address"]){
 			addressrepo.insert(shipping_address).then(v=>{
 				client.shiping_address = v.identifiers[0].id
-			})
+			},e=>{console.log(e);return "error"})
 		}
-	}).finally(()=>{
-		clientrepo.insert(client).then((ev)=>{return "ok"},(err)=>{console.log(err);return "error"})
+	},er=>{console.log(er);	return "error"}).finally(()=>{
+		console.log(client)
+		return clientrepo.insert(client).then((ev)=>{return "ok"},(err)=>{console.log(err);return "error"})
 	})
 })
 
@@ -117,7 +120,41 @@ ipcMain.handle("add-new-company",(ev,args)=>{
 	},(err)=>{console.log(err);return "error"})
 })
 
+ipcMain.handle("get-all-client",(ev,args)=>{
+	var clientrepo = DBManager.getRepository(Client)
+	return clientrepo.find()
+})
+
 ipcMain.handle("company-sign-in",(ev,args)=>{
 	var companyrepo = DBManager.getRepository(CompanyModel)
 	return companyrepo.findOneBy({email:args.email,password:args.password})
+})
+
+ipcMain.handle("add-new-product",(ev,args)=>{
+	var productRepo = DBManager.getRepository(Product)
+	console.log(args)
+	var product = {
+		p_type:args.type,
+		uom:args.uom,
+		sku:args.sku,
+		product_name:args.product_name,
+		purchase_price:args.purchase_price,
+		hns:args.hns,
+		unit_price:args.unit_price,
+		tax:args.tax,
+		quantity:args.qty,
+		cess:args.cess,
+		additional:args.additional,
+		description:args.description
+	}
+	return productRepo.insert(product).then(v=>{
+		return "ok"
+	},err=>{
+		console.log(err)
+		return "error"
+	})
+})
+ipcMain.handle("get-all-product",(ev,args)=>{
+	var productRepo = DBManager.getRepository(Product)
+	return productRepo.find()
 })

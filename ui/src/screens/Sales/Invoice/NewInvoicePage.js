@@ -56,7 +56,9 @@ const select_option = [
 ]
 
 
-
+let invoice = {}
+let client_option = []
+let shiping_option=[]
 export default function NewInvoicePage() {
   useEffect(()=>{
     document.title = "New Invoice"
@@ -84,9 +86,7 @@ export default function NewInvoicePage() {
           </div>
         </div>
 
-
-
-
+        
         <div className='flex flex-row w-full justify-between my-2'>
           <div className='mr-12'>
             <SelectComp label="Ship To" options={select_option} isinput={false} handle={handleSelect} />

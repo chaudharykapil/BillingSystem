@@ -1,7 +1,8 @@
 import { Button, Select, Textarea, Typography, Option, Input, Checkbox } from '@material-tailwind/react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProductInvoiceTable } from '../components/ProductInvoiceTable'
 import SelectComp from '../components/SelectComp';
+const {ipcRenderer} = window.require("electron")
 
 const TABLE_HEAD = ["No", "Client Name", "Invoice No", "Issue Date","Due Date", "Amount", "Tax", "Total","Status", "Private Notes", "Emailed", "Ammount Paid","Balance","Dr/Cr","Date of payemnt","type","Action"];
  
@@ -57,9 +58,7 @@ const select_option = [
 
 
 export default function ShowQuotationPage() {
-  useEffect(()=>{
-    document.title = "Show Quotation"
-  })
+  
   const handleSelect = (type,value)=>{
     console.log(type,value)
   }
@@ -96,7 +95,7 @@ export default function ShowQuotationPage() {
         <div className='flex flex-row w-full justify-between my-2'>
           
           <div className=' mr-12'>
-            <Input variant="outlined" label="Quick Search" placeholder="Due Date"/>
+            <Input variant="outlined" label="Quick Search" placeholder="Quick Search"/>
           </div>
         </div>
         <div className='flex justify-center'>

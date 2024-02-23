@@ -8,6 +8,8 @@ import ShowCreditDebitNotePage from './CreditDebitNote/ShowCreditDebitNote'
 import NewPaymentDocScreen from './PaymentDocument/NewPaymentDocScreen'
 import ShowPaymentDocScreen from './PaymentDocument/ShowPaymentDocScreen'
 import ShowClientPage from './Client/ShowClientPage'
+import NewProductServicePage from './ProductService/NewProductServicePage'
+import ShowProductServicePage from './ProductService/ShowProductServicePage'
 
 export default function ModuleSalePage({page}) {
     const [currentPage,setCurrentPage] = useState(<></>)
@@ -46,12 +48,18 @@ export default function ModuleSalePage({page}) {
                 break
             case "showclient":
                 setCurrentPage(<ShowClientPage />)
-                
+            case "newproductservice":
+                setCurrentPage(<NewProductServicePage />)
+                break
+            case "showproductservice":
+                setCurrentPage(<ShowProductServicePage />)
+                break
+                    
             
         }
     },[opt])
   return (
-    <div className='w-screen h-screen'>
+    <div className='flex flex-col w-screen h-screen'>
         <div className='mx-5'>
             <select onClick={(v)=>{setOpt(v.target.value)}}>
                 <option value="newinvoice">New Invoice</option>
@@ -64,10 +72,13 @@ export default function ModuleSalePage({page}) {
                 <option value="showdebitnote">Show Debit Note</option>
                 <option value="newpaymentnote">New Payment Notes</option>
                 <option value="showpaymentnote">Show Payment Notes</option>
+                <option value="newproductservice">Add New Product/Service</option>
+                <option value="showproductservice">Show Product/Service</option>
                 <option value="showclient">Clients</option>
+                
             </select>
         </div>
-        <div>
+        <div className='flex-1'>
             {currentPage}
         </div>
     </div>
