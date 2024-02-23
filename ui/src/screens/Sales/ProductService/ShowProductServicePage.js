@@ -11,36 +11,90 @@ let product_option = []
 
 export default function ShowProductServicePage() {
   const [product,setProduct] = useState([])
+  const [queries,setQueries] = useState({unit_price:[0,0],qty:[0,0]})
   useEffect(()=>{
     document.title = "Show Product"
-    var res = ipcRenderer.invoke("get-all-product")
-    res.then((v)=>{
-      let temp = []
-      product_option = []
-      console.log(v)
-      v.map((c,idx)=>{
-        temp.push(
-          {
-            product_name:c.product_name,
-            description:c.description,
-            qty:c.quantity,
-            qty_sold:0,
-            amount:0,
-            unit_price:c.unit_price,
-            uom:c.uom,
-            cogs:0,
-            gross_margin:0,
-            gross_margin_per:0,
-          }
-        )
-        product_option.push({text:c.product_name,value:c.id})
-      })
-
-      setProduct(temp)
-    })
+    getAllProduct().then(v=>setProduct(v))
   },[])
-  const handleSelect = (type,value)=>{
-    console.log(type,value)
+  const getAllProduct = async ()=>{
+    var res = await ipcRenderer.invoke("get-all-product")
+    let temp = []
+    product_option = []
+    console.log(res)
+    res.map((c,idx)=>{
+      temp.push(
+        {
+          id:c.id,
+          product_name:c.product_name,
+          description:c.description,
+          qty:c.quantity,
+          qty_sold:0,
+          amount:0,
+          unit_price:c.unit_price,
+          uom:c.uom,
+          cogs:0,
+          gross_margin:0,
+          gross_margin_per:0,
+        }
+      )
+      product_option.push({text:c.product_name,value:c.product_name})
+    })
+    return temp
+  }
+  
+  const searchByQuery = async ()=>{
+    console.log(queries)
+    let temp2 = await getAllProduct()
+    let temp = []
+    if("name" in queries){
+      temp2.map((v,i)=>{
+        if(v.product_name == queries.name){
+          temp.push(v)
+        }
+      })
+    }
+    else if("unit_price" in queries){
+      temp2.map((v,i)=>{
+        if(v.unit_price >= queries.unit_price[0] && v.unit_price <= queries.unit_price[1]){
+          temp.push(v)
+        }
+      })
+    }
+    else if("qty" in queries){
+      temp2.map((v,i)=>{
+        if(v.qty >= queries.qty[0] && v.qty <= queries.qty[1]){
+          temp.push(v)
+        }
+      })
+    }
+    else if("sku" in queries){
+      var res = await ipcRenderer.invoke("get-all-product")
+      product_option = []
+      console.log(res)
+      res.map((c,idx)=>{
+        if(c.sku == queries.sku){
+          temp.push(
+            {
+              id:c.id,
+              product_name:c.product_name,
+              description:c.description,
+              qty:c.quantity,
+              qty_sold:0,
+              amount:0,
+              unit_price:c.unit_price,
+              uom:c.uom,
+              cogs:0,
+              gross_margin:0,
+              gross_margin_per:0,
+            }
+          )
+        }
+      })
+    }
+    else{
+      temp = await getAllProduct()
+    }
+    setProduct(temp)
   }
   return (
     <div className='flex flex-col w-full h-full px-5'>
@@ -51,27 +105,45 @@ export default function ShowProductServicePage() {
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           <div className=' mr-12'>
-		  	    <SelectComp label="Product/Service" options={product_option} isinput={false} handle={handleSelect} />
+		  	    <SelectComp label="Product/Service" options={product_option} isinput={false} handle={(values)=>{
+              setQueries({name:values.select})
+            }} />
           </div>
           <div className='flex mr-12'>
-            <Input variant="standard" label="Unit Price From" placeholder="Email"/>
-            <Input variant="standard" label="Unit Price To" placeholder="city"/>
+            <Input variant="standard" onChange={v=>{
+              let t = queries.unit_price
+              t[0] = v.target.value
+              setQueries({unit_price:t})
+            }} label="Unit Price From" placeholder="Unit Price"/>
+            <Input variant="standard" onChange={v=>{
+              let t = queries.unit_price
+              t[1] = v.target.value
+              setQueries({unit_price:t})
+            }} label="Unit Price To" placeholder="Unit Price"/>
           </div>
           <div className='flex mr-12'>
-            <Input variant="standard" label="Quantity From" placeholder="Email"/>
-            <Input variant="standard" label="Quantity To" placeholder="city"/>
+            <Input variant="standard" onChange={v=>{
+              let t = queries.qty
+              t[0] = v.target.value
+              setQueries({qty:t})
+            }} label="Quantity From" placeholder="Qty"/>
+            <Input variant="standard" onChange={v=>{
+              let t = queries.qty
+              t[1] = v.target.value
+              setQueries({qty:t})
+            }} label="Quantity To" placeholder="Qty"/>
           </div>
           
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           
           <div className='mr-12'>
-            <Input variant="outlined" label="SKUs" placeholder="Contact Name"/>
+            <Input variant="outlined" onChange={v=>{setQueries({sku:v.target.value})}} label="SKUs" placeholder="SKUs"/>
           </div>
           
         </div>
         <div className='flex justify-center'>
-            <div className='mx-3'><Button>Search</Button></div>
+            <div className='mx-3'><Button onClick={searchByQuery}>Search</Button></div>
             <div className='mx-3'><Button>Reset</Button></div>
         </div>
       </div>
