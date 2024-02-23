@@ -48,6 +48,7 @@ export default function ModuleSalePage({page}) {
                 break
             case "showclient":
                 setCurrentPage(<ShowClientPage />)
+                break
             case "newproductservice":
                 setCurrentPage(<NewProductServicePage />)
                 break
