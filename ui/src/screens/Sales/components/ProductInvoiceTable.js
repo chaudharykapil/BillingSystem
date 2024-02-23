@@ -40,7 +40,7 @@ export function ProductInvoiceTable({TABLE_HEAD,TABLE_ROWS}) {
                     {index+1}
                   </Typography>
                 </td>
-                {Object.keys(values).map((v,idx)=><td className={classes}>
+                {Object.keys(values).slice(1,-1).map((v,idx)=><td className={classes}>
                   <Typography
                     variant="small"
                     color="blue-gray"

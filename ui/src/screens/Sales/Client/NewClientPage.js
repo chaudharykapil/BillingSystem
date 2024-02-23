@@ -28,8 +28,6 @@ function DifferentAddress(){
 
     const [state_option,setState] = useState([])
     const [country_option,setCountry] = useState(getAllCountry())
-    
-
     return(
         <div>
             <div className='mb-5'>
@@ -71,7 +69,7 @@ export default function NewClientPage() {
         var res = ipcRenderer.invoke("add-new-client",client_detail)
         console.log(res)
         res.then((v)=>{
-            if(v == "ok"){
+            if(v == undefined){
                 alert("Client Added Succesfully")
             }
             else{
@@ -79,6 +77,8 @@ export default function NewClientPage() {
             }
         })
     }
+
+    
   return (
     <div className='flex w-full h-full p-5 border-2 border-black justify-between'>
         <div className=''>
@@ -107,22 +107,19 @@ export default function NewClientPage() {
                 <Input variant='outlined' onChange={v=>{client_detail["vat"] = v.target.value}} label='VAT No' />
             </div>
             <div className='mb-5'>
-                <Textarea variant='outlined' onChange={v=>{client_detail["billing_address"] = v.target.value}} label='Billing Address' />
+                <Textarea variant='outlined' onChange={(v)=>{client_detail["billing_address"] = v.target.value}} label='Billing Address' />
             </div>
             <div className='flex mb-5'>
-                <SelectComp label="City" isinput={false} options={select_option} handle={(values)=>{
-                    client_detail["city"] = values.select
-                }} />
-                <SelectComp label="State" isinput={false} options={state_option} handle={(values)=>{
+                <div className='mr-5'><Input variant='outlined' onChange={v=>{client_detail["city"] = v.target.value}} label='City' /></div>
+                <div className='mr-5'><SelectComp label="State" isinput={false} options={state_option} handle={(values)=>{
                     client_detail["state"] = values.select
-                }} />
+                }} /></div>
             </div>
             <div className='flex mb-5'>
                 <div className='mr-5'><Input variant='outlined' onChange={v=>{client_detail["pincode"] = v.target.value}} label='Pincode' /></div>
                 <div className='mr-5'><SelectComp label="Country" isinput={false} options={country_option} handle={(values)=>{
                     client_detail["country"] = values.select
                     console.log(getStates(values.select))
-
                     set_State(getStates(values.select))
                 }} />
                 </div>

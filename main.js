@@ -84,11 +84,11 @@ ipcMain.handle("add-new-client",(ev,args)=>{
 		if(args["shipping_address"]){
 			addressrepo.insert(shipping_address).then(v=>{
 				client.shiping_address = v.identifiers[0].id
-			},e=>{console.log(e);return "error"})
+			},e=>{console.log(e)})
 		}
-	},er=>{console.log(er);	return "error"}).finally(()=>{
+	},er=>{console.log(er)}).finally(()=>{
 		console.log(client)
-		return clientrepo.insert(client).then((ev)=>{return "ok"},(err)=>{console.log(err);return "error"})
+		clientrepo.insert(client).then((ev)=>{return "ok"},(err)=>{console.log(err);return "error"})
 	})
 })
 

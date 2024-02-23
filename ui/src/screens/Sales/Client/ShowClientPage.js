@@ -7,57 +7,109 @@ import { api_new_client } from '../../../utils/PageApi';
 const {ipcRenderer} = window.require("electron")
 const TABLE_HEAD = ["S.No", "Client Name", "Contact Name", "Email","GSTIN", "PAN", "Phone","TIN", "VAT", "Client Detail","Action"];
 
-
-const select_option = [
-  {
-    "text":"HTML",
-    "value":"HTML",
-  },
-  {
-    "text":"Js",
-    "value":"JS",
-  },
-  {
-    "text":"C++",
-    "value":"C++",
-  },
-  {
-    "text":"Java",
-    "value":"Java",
-  }
-]
-
-
+let client_option = []
 export default function ShowClientPage() {
   const [clients,setClients] = useState([])
+  const [searchQuery,setSearchQuery] = useState({})
   useEffect(()=>{
     document.title = "Show Clients"
-    var res = ipcRenderer.invoke("get-all-client")
-    res.then((v)=>{
-      let temp = []
-      console.log(v)
-      v.map((c,idx)=>{
-        temp.push(
-          {
-            client_name:c.client_name,
-            contact_name:c.contact_name,
-            email:c.email,
-            gstin:c.gstin,
-            pan:c.pan,
-            phone:c.phone,
-            tin:c.tin,
-            vat:c.vat,
-            detail:c.other_client_detail,
-          }
-        )
-      })
-      setClients(temp)
-    })
+    getAllClients().then(v=>setClients(v))
   },[])
 
-  const handleSelect = (type,value)=>{
-    console.log(type,value)
+  const getAllClients = async ()=>{
+    var res = await ipcRenderer.invoke("get-all-client")
+    let temp = []
+    client_option = []
+    console.log(res)
+    res.map((c,idx)=>{
+      temp.push(
+        {
+          id:c.id,
+          client_name:c.client_name,
+          contact_name:c.contact_name,
+          email:c.email,
+          gstin:c.gstin,
+          pan:c.pan,
+          phone:c.phone,
+          tin:c.tin,
+          vat:c.vat,
+          detail:c.other_client_detail,
+        }
+      )
+      client_option.push({text:c.client_name,value:c.id})
+    })
+    return temp
   }
+
+  const searchByName = async (id)=>{
+    console.log(id)
+    if(id == 0 || id == undefined){
+      setClients(await getAllClients())
+        return;
+    }
+    else{
+      let temp1 = await getAllClients()
+      let temp = []
+        temp1.map((c,idx)=>{
+          if(c.id == id){
+            temp.push(c);
+          }
+        })
+        setClients(temp)
+    }
+  }
+
+  const searchByQuery = async ()=>{
+    console.log(searchQuery)
+    let temp1 = await getAllClients()
+    if("email" == searchQuery.type){
+      let temp = []
+        temp1.map((c,idx)=>{
+          if(c.email == searchQuery.query){
+            temp.push(c);
+          }
+        })
+        setClients(temp)
+    }
+    else if("phone" == searchQuery.type){
+      let temp = []
+        temp1.map((c,idx)=>{
+          if(c.phone == searchQuery.query){
+            temp.push(c);
+          }
+        })
+        setClients(temp)
+    }
+    else if("contact_name" == searchQuery.type){
+      let temp = []
+        temp1.map((c,idx)=>{
+          if(c.contact_name == searchQuery.query){
+            temp.push(c);
+          }
+        })
+        setClients(temp)
+    }
+    if("gstin" == searchQuery.type){
+      let temp = []
+        temp1.map((c,idx)=>{
+          if(c.gstin == searchQuery.query){
+            temp.push(c);
+          }
+        })
+        setClients(temp)
+    }
+    if("city" == searchQuery.type){
+      let temp = []
+        temp1.map((c,idx)=>{
+          if(c.city == searchQuery.query){
+            temp.push(c);
+          }
+        })
+        setClients(temp)
+    }
+  }
+
+  
   return (
     <div className='flex flex-col w-full h-full px-5'>
 
@@ -68,31 +120,33 @@ export default function ShowClientPage() {
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           <div className=' mr-12'>
-		  	    <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
+		  	    <SelectComp label="Client" options={client_option} isinput={false} handle={(values)=>{
+              searchByName(values.select)
+            }} />
           </div>
           <div className='mr-12'>
-            <Input variant="outlined" label="Email" placeholder="Email"/>
+            <Input variant="outlined" label="Email" onChange={v=>setSearchQuery({type:"email",query:v.target.value})} placeholder="Email"/>
           </div>
           <div className=' mr-12'>
-            <Input variant="outlined" label="City" placeholder="city"/>
+            <Input variant="outlined" label="City" onChange={v=>setSearchQuery({type:"email",query:v.target.value})} placeholder="city"/>
           </div>
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           
           <div className='mr-12'>
-            <Input variant="outlined" label="Contact Name" placeholder="Contact Name"/>
+            <Input variant="outlined" label="Contact Name" onChange={v=>setSearchQuery({type:"contact_name",query:v.target.value})} placeholder="Contact Name"/>
           </div>
           <div className='mr-12'>
-            <Input variant="outlined" label="Number" placeholder="Number"/>
+            <Input variant="outlined" label="Number" onChange={v=>setSearchQuery({type:"phone",query:v.target.value})} placeholder="Number"/>
           </div>
           <div className='mr-12'>
-            <Input variant="outlined" label="GSTIN" placeholder="GSTIN"/>
+            <Input variant="outlined" label="GSTIN" onChange={v=>setSearchQuery({type:"gstin",query:v.target.value})} placeholder="GSTIN"/>
           </div>
         </div>
 
         <div className='flex justify-center'>
-            <div className='mx-3'><Button>Search</Button></div>
-            <div className='mx-3'><Button>Reset</Button></div>
+            <div className='mx-3'><Button onClick={searchByQuery}>Search</Button></div>
+            <div className='mx-3'><Button onClick={()=>{window.location.reload()}}>Reset</Button></div>
         </div>
       </div>
       <hr/>
@@ -102,7 +156,7 @@ export default function ShowClientPage() {
         <div className='mx-3'><Button onClick={api_new_client}>New Client</Button></div>
       </div>
 
-      <div className='flex flex-1 mb-2 h-full'>
+      <div className='flex flex-1 mb-2'>
         <ProductInvoiceTable TABLE_HEAD={TABLE_HEAD} TABLE_ROWS={clients} />
       </div>
 

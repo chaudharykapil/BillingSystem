@@ -7,7 +7,7 @@ export default function SelectComp({options,handle,isinput,label}) {
   return (
     <div className='flex flex-1 items-center'>
         <div className=''>
-            <Select value={option} disabled = {options.length?false:true} label={label} onChange={(v)=>{setOption(v);handle({"select":v,"input":inp})}}>
+            <Select disabled = {options.length?false:true} label={label} onChange={(v)=>{setOption(v);handle({"select":v,"input":inp})}}>
                 {options.map((e)=><Option value={e.value}>{e.text}</Option>)}
             </Select>
         </div>
