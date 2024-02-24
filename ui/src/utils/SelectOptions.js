@@ -81,7 +81,7 @@ export const get_all_client_option = async ()=>{
 export const get_all_product_option = async ()=>{
     var res = await ipcRenderer.invoke("get-all-product")
     let product_option = [{text:"Add New Product",value:"*"}]
-    console.log(res)
+    
     res.map((c,idx)=>{
       
       product_option.push({text:c.product_name,value:c.id})

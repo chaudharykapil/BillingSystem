@@ -61,24 +61,7 @@ export default function ModuleSalePage({page}) {
     },[opt])
   return (
     <div className='flex flex-col w-screen h-screen'>
-        <div className='mx-5'>
-            <select onClick={(v)=>{setOpt(v.target.value)}}>
-                {/* <option value="newinvoice">New Invoice</option> */}
-                <option value="showinvoice">Show Invoice</option>
-                {/* <option value="newquotation">New Quotation</option> */}
-                <option value="showquotation">Show Quotation</option>
-                {/* <option value="newcreditnote">New Credit Note</option> */}
-                <option value="showcreditnote">Show Credit Note</option>
-                {/* <option value="newdebitnote">New Debit Note</option> */}
-                <option value="showdebitnote">Show Debit Note</option>
-                {/* <option value="newpaymentnote">New Payment Notes</option> */}
-                <option value="showpaymentnote">Show Payment Notes</option>
-                {/* <option value="newproductservice">Add New Product/Service</option> */}
-                <option value="showproductservice">Show Product/Service</option>
-                <option value="showclient">Clients</option>
-                
-            </select>
-        </div>
+        
         <div className='flex-1'>
             {currentPage}
         </div>

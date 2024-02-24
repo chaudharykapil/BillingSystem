@@ -9,57 +9,18 @@ const TABLE_HEAD = ["No", "Product Service", "HSNSAC", "Description","UoM", "Qty
  
 const TABLE_ROWS = [
   
-  {
-    name: "Laurent Perrier",
-    job: "Executive",
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
   
 ];
 
 
 const select_option = [
-  {
-    "text":"HTML",
-    "value":"HTML",
-  },
-  {
-    "text":"Js",
-    "value":"JS",
-  },
-  {
-    "text":"C++",
-    "value":"C++",
-  },
-  {
-    "text":"Java",
-    "value":"Java",
-  }
+  
 ]
 
 
 let invoice = {}
-let client_option = await get_all_client_option()
+let client_option = (await get_all_client_option())
+client_option.shift()
 let shiping_option=[]
 let product_option = await get_all_product_option()
 let tax_option = tax_type()
@@ -67,7 +28,6 @@ let uom_option = uom_type()
 export default function NewInvoicePage() {
   useEffect(()=>{
     document.title = "New Invoice"
-    // get_all_client_option().then(v=>{client_option = v})
   })
   const handleSelect = (type,value)=>{
     console.log(type,value)

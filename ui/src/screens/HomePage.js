@@ -96,7 +96,7 @@ export default function HomePage() {
       onClick: () => {
         api_show_invoice();
       },
-    },
+    }
   ];
 
   return (
