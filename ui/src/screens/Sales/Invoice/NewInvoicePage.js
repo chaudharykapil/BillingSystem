@@ -20,7 +20,6 @@ const select_option = [
 
 let invoice = {}
 let client_option = (await get_all_client_option())
-client_option.shift()
 let shiping_option=[]
 let product_option = await get_all_product_option()
 let tax_option = tax_type()
