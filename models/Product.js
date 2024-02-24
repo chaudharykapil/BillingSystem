@@ -20,7 +20,7 @@ const Product = new EntitySchema({
         },
         sku:{
             type:Number,
-            default:1
+            nullable:true
         },
         product_name:{
             type:String,
@@ -28,26 +28,35 @@ const Product = new EntitySchema({
         },
         purchase_price:{
             type:Number,
+            nullable:true
         },
         hns:{
-            type:String
+            type:String,
+            nullable:true
+        },
+        sac:{
+            type:String,
+            nullable:true
         },
         unit_price:{
-            type:Number
+            type:Number,
+            nullable:true
         },
         tax:{
             type:String,
             default:"1"
         },
         quantity:{
-            type:Number
+            type:Number,
+            nullable:true
         },
         quantity_sold:{
             type:Number,
             default:0,
         },
         cess:{
-            type:String
+            type:String,
+            nullable:true
         },
         additional:{
             type:String,

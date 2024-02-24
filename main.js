@@ -142,6 +142,7 @@ ipcMain.handle("add-new-product",(ev,args)=>{
 		hns:args.hns,
 		unit_price:args.unit_price,
 		tax:args.tax,
+		sac:args.sac,
 		quantity:args.qty,
 		cess:args.cess,
 		additional:args.additional,
