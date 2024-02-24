@@ -8,13 +8,10 @@ import { api_new_client, api_new_product } from '../../../utils/PageApi';
 const TABLE_HEAD = ["No", "Product Service", "HSNSAC", "Description","UoM", "Qty", "Unit Price", "Value","Discount", "CGST", "SGST", "IGST","Action"];
  
 const TABLE_ROWS = [
-  
-  
 ];
 
 
 const select_option = [
-  
 ]
 
 
