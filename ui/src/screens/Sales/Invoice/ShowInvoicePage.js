@@ -2,6 +2,7 @@ import { Button, Select, Textarea, Typography, Option, Input, Checkbox } from '@
 import React, { useEffect } from 'react'
 import { ProductInvoiceTable } from '../components/ProductInvoiceTable'
 import SelectComp from '../components/SelectComp';
+import { api_new_invoice } from '../../../utils/PageApi';
 
 const TABLE_HEAD = ["No", "Client Name", "Invoice No", "Issue Date","Due Date", "Amount", "Tax", "Total","Status", "Private Notes", "Emailed", "Ammount Paid","Balance","Dr/Cr","Date of payemnt","type","Action"];
  
@@ -120,7 +121,7 @@ export default function ShowInvoicePage() {
       <hr/>
       <div className='flex my-2 flex-row-reverse'>
         <div className='mx-3'><Button>Export</Button></div>
-        <div className='mx-3'><Button>New Invoice</Button></div>
+        <div className='mx-3'><Button onClick={api_new_invoice}>New Invoice</Button></div>
       </div>
 
       <div className='flex flex-1 mb-2 h-full'>

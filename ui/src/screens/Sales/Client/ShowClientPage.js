@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { ProductInvoiceTable } from '../components/ProductInvoiceTable'
 import SelectComp from '../components/SelectComp';
 import { api_new_client } from '../../../utils/PageApi';
+import { get_all_client_option } from '../../../utils/SelectOptions';
 const {ipcRenderer} = window.require("electron")
 const TABLE_HEAD = ["S.No", "Client Name", "Contact Name", "Email","GSTIN", "PAN", "Phone","TIN", "VAT", "Client Detail","Action"];
 
@@ -17,6 +18,7 @@ export default function ShowClientPage() {
   },[])
 
   const getAllClients = async ()=>{
+    console.log(await get_all_client_option())
     var res = await ipcRenderer.invoke("get-all-client")
     let temp = []
     client_option = []
@@ -36,8 +38,9 @@ export default function ShowClientPage() {
           detail:c.other_client_detail,
         }
       )
-      client_option.push({text:c.client_name,value:c.id})
+      
     })
+    client_option = await get_all_client_option()
     return temp
   }
 
@@ -121,6 +124,10 @@ export default function ShowClientPage() {
         <div className='flex flex-row w-full justify-between my-2'>
           <div className=' mr-12'>
 		  	    <SelectComp label="Client" options={client_option} isinput={false} handle={(values)=>{
+              if(values.select == "*"){
+                api_new_client()
+                return
+              }
               searchByName(values.select)
             }} />
           </div>

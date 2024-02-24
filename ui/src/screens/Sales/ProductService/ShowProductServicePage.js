@@ -7,7 +7,7 @@ import { api_new_client, api_new_product } from '../../../utils/PageApi';
 const {ipcRenderer} = window.require("electron")
 const TABLE_HEAD = ["S.No", "Product/Service Name", "Description", "Quantity","Quantity Sold", "Amount", "Unit Price","UoM", "COGS", "Gross Margin","Gross Margin %","Action"];
 
-let product_option = []
+let product_option = [{text:"Add New Product",value:"*"}]
 
 export default function ShowProductServicePage() {
   const [product,setProduct] = useState([])
@@ -19,7 +19,7 @@ export default function ShowProductServicePage() {
   const getAllProduct = async ()=>{
     var res = await ipcRenderer.invoke("get-all-product")
     let temp = []
-    product_option = []
+    product_option = [{text:"Add New Product",value:"*"}]
     console.log(res)
     res.map((c,idx)=>{
       temp.push(
@@ -37,7 +37,7 @@ export default function ShowProductServicePage() {
           gross_margin_per:0,
         }
       )
-      product_option.push({text:c.product_name,value:c.product_name})
+      product_option.push({text:c.product_name,value:c.id})
     })
     return temp
   }
@@ -48,7 +48,7 @@ export default function ShowProductServicePage() {
     let temp = []
     if("name" in queries){
       temp2.map((v,i)=>{
-        if(v.product_name == queries.name){
+        if(v.id == queries.name){
           temp.push(v)
         }
       })
@@ -106,6 +106,10 @@ export default function ShowProductServicePage() {
         <div className='flex flex-row w-full justify-between my-2'>
           <div className=' mr-12'>
 		  	    <SelectComp label="Product/Service" options={product_option} isinput={false} handle={(values)=>{
+              if(values.select == "*"){
+                api_new_product()
+                return
+              }
               setQueries({name:values.select})
             }} />
           </div>

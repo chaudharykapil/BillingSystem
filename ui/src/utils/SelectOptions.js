@@ -65,15 +65,26 @@ export const tax_type = ()=>{
     
 }
 
-export const get_all_client_option = ()=>{
-    let option = []
-    var res = ipcRenderer.invoke("get-all-client")
-    return res.then(v=>{
-        v.map((c,idx)=>{
-            option.push({
-                text:c.client_name,
-                value:c.id
-            })
+export const get_all_client_option = async ()=>{
+    let option = [{text:"Add new Client",value:"*"}]
+    var res = await ipcRenderer.invoke("get-all-client")
+    res.map((c,idx)=>{
+        option.push({
+            text:c.client_name,
+            value:c.id
         })
-    }).finally(()=>option)
+    })
+    return option
+
+}
+
+export const get_all_product_option = async ()=>{
+    var res = await ipcRenderer.invoke("get-all-product")
+    let product_option = [{text:"Add New Product",value:"*"}]
+    console.log(res)
+    res.map((c,idx)=>{
+      
+      product_option.push({text:c.product_name,value:c.id})
+    })
+    return product_option
 }

@@ -2,6 +2,8 @@ import { Button, Select, Textarea, Typography, Option, Input, Checkbox } from '@
 import React, { useEffect } from 'react'
 import { ProductInvoiceTable } from '../components/ProductInvoiceTable'
 import SelectComp from '../components/SelectComp';
+import { get_all_client_option, get_all_product_option, tax_type, uom_type } from '../../../utils/SelectOptions';
+import { api_new_client, api_new_product } from '../../../utils/PageApi';
 
 const TABLE_HEAD = ["No", "Product Service", "HSNSAC", "Description","UoM", "Qty", "Unit Price", "Value","Discount", "CGST", "SGST", "IGST","Action"];
  
@@ -57,11 +59,15 @@ const select_option = [
 
 
 let invoice = {}
-let client_option = []
+let client_option = await get_all_client_option()
 let shiping_option=[]
+let product_option = await get_all_product_option()
+let tax_option = tax_type()
+let uom_option = uom_type()
 export default function NewInvoicePage() {
   useEffect(()=>{
     document.title = "New Invoice"
+    // get_all_client_option().then(v=>{client_option = v})
   })
   const handleSelect = (type,value)=>{
     console.log(type,value)
@@ -76,7 +82,12 @@ export default function NewInvoicePage() {
         </div>
         <div className='flex flex-row w-full justify-between my-2'>
           <div className=' mr-12'>
-            <SelectComp label="Client" options={select_option} isinput={false} handle={handleSelect} />
+            <SelectComp label="Client" options={client_option} isinput={false} handle={(values)=>{
+              if(values.select == "*"){
+                api_new_client()
+                return
+              }
+            }} />
           </div>
           <div className=' mr-12'>
             <Input variant="outlined" label="Document No" placeholder="Document No"/>
@@ -115,42 +126,47 @@ export default function NewInvoicePage() {
       <hr/>
 
       <div className='my-2 '>
-        <div className='flex justify-between my-2'>
-          <div className='mr-2'>
-            <SelectComp label="Product" options={select_option} isinput={false} handle={handleSelect} />
+        <div className='flex my-2'>
+          <div className='mr-12'>
+            <SelectComp label="Product" options={product_option} isinput={false} handle={(values)=>{
+              if(values.select == "*"){
+                api_new_product()
+                return
+              }
+            }} />
           </div>
-          <div className='mr-2'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Description" placeholder="Description" />
           </div>
-          <div className='mr-2'>
-            <SelectComp label="UoM" options={select_option} isinput={false} handle={handleSelect} />
+          <div className='mr-12'>
+            <SelectComp label="UoM" options={uom_option} isinput={false} handle={handleSelect} />
           </div>
-          <div className='mr-2'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Qty" placeholder="Qty" />
           </div>
-          <div className='mr-2'></div>
-          <div className='mr-2'></div>
-        </div>
-        <div className='flex justify-between'>
-          
-          <div className='mr-2'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
           </div>
-          <div className=' mr-2'>
+          
+        </div>
+        <div className='flex'>
+          
+          
+          <div className=' mr-12'>
             <Input variant="outlined" label="Discount" placeholder="Discount" />
           </div>
 
-          <div className='mr-2'>
+          <div className='mr-12'>
             <Input variant="outlined" label="Unit Price" placeholder="Unit Price" />
           </div>
-          <div className=' mr-2'>
+          <div className=' mr-12'>
             <Input variant="outlined" label="Discount" placeholder="Discount" />
           </div>
-          <div className='mr-2'>
-            <SelectComp label="Tax" options={select_option} isinput={false} handle={handleSelect} />
+          <div className='mr-12'>
+            <SelectComp label="Tax" options={tax_option} isinput={false} handle={handleSelect} />
           </div>
           
-          <div className='mr-2'>
+          <div className='mr-12'>
             <Button>+</Button>
           </div>
         </div>
