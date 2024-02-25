@@ -89,7 +89,7 @@ ipcMain.handle("add-new-client",(ev,args)=>{
 				client.shiping_address = v.identifiers[0].id
 			},e=>{console.log(e)})
 		}
-	},er=>{console.log(er)}).finally(()=>{
+	},er=>{console.log(er)}).thein((ev)=>{
 		console.log(client)
 		clientrepo.insert(client).then((ev)=>{return "ok"},(err)=>{console.log(err);return "error"})
 	})
