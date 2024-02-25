@@ -6,6 +6,9 @@ const {CompanyModel}  = require("./models/Company");
 const { Client } = require('./models/Client');
 const { Address } = require('./models/Address');
 const { Product } = require('./models/Product');
+const electronReload = require('electron-reload');
+electronReload(__dirname);
+
 
 let mainWindow;
 function createWindow() {
