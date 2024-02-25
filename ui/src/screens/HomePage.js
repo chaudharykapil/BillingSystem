@@ -71,8 +71,7 @@ function NewVoiceCard({onClick}){
 function ShortCutCard({title,onClick,color}){
   return(
     <div  onClick={onClick}  className="flex flex-col bg-white
-      bg-clip-border inline-block rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10">
-    <hr className="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+      bg-clip-border rounded border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10">
     <div className="p-4 md:p-5 bg-blue">
 
       <h3 className="text-lg font-bold text-gray-800 dark:text-white">
@@ -107,24 +106,20 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="flex justify-between divide-x-2 divide-blue-300 ">
+    <div className="flex justify-evenly w-full h-full ">
     <div
       className={` ${
         open ? "w-72" : "w-20 "
-      } bg-dark-purple h-screen p-5  pt-8 relative duration-300  h-screen sticky top-0`}
+      } bg-dark-purple h-full p-5  pt-8 duration-300 sticky top-0`}
     >
-      <img
-         src={User}
-        className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple 
-         border-2 rounded-full  ${!open && "rotate-180"}`}
-        onClick={() => setOpen(!open)}
-      />
       <div className="flex gap-x-4 items-center  ">
         <img
           src={User}
           className={`cursor-pointer duration-500 ${
             open && "rotate-[360deg]"
-          }`}
+          }`
+        }
+        onClick={() => setOpen(!open)}
         />
         <h1
           className={`text-white origin-left font-medium text-xl duration-200 ${
@@ -134,33 +129,34 @@ export default function HomePage() {
           Designer
         </h1>
       </div>
-      <MyAccordion title="Sales Report" children={sales_option} />
+      
+      {open?<MyAccordion title="Sales Report" children={sales_option} />:null}
 
     </div>
    
-    <div className="h-full border-l border-gray-300"></div>
-    <div className=' items-center p-4 w-screen m-4'>
+    <div className='flex flex-col items-center p-4 h-screen  justify-center w-full m-4'>
    
-      <div className=" flex  static justify-evenly w-2/4 m-11">
-        <div className='mx-12'><Button color="blue" className=" border-none px-2 m-5 ">Unpaid Involls: </Button></div>
-        <div> <Button color="orange" className=" border-none px-2 m-5">Overdue Quotes: </Button></div>
-        <div><Button color="green" className=" border-none px-2 m-5">Low Stock Items: </Button></div>
-        <div> <Button color="pink" className=" border-none px-2 m-5">Unpaid Bills: </Button></div>
+      <div className=" flex  static  justify-center w-full gap-x-4">
+        <div className=''><Button color="blue" className=" border-none px-2 ">Unpaid Involls: </Button></div>
+        <div> <Button color="orange" className=" border-none px-2">Overdue Quotes: </Button></div>
+        <div><Button color="green" className=" border-none px-2">Low Stock Items: </Button></div>
+        <div> <Button color="pink" className=" border-none px-2">Unpaid Bills: </Button></div>
           
       </div>
-        <div className="absolute mt-36 w-3/4 m-8 h-3 p-6">
-          <NewVoiceCard onClick={api_new_invoice} />
+        <div className=" mt-1 flex flex-col items-center">
+            <div className='w-full mx-10'><NewVoiceCard onClick={api_new_invoice} /></div>
           <div className='flex justify-evenly'>
-            <div>
+          <div>
             <div className="flex flex-col mr-1">
             <ShortCutCard title="Quotation"  />
             <div className="my-2 border-b border-blue-500"></div>
             <ShortCutCard title="Performa Invoice"  />
             <div className="my-2 border-b border-blue-500"></div>
             <ShortCutCard title="Bill of Supply"  />
+            
           </div>
 
-            </div>
+          </div>
             <div>
             <div className="flex flex-col">
             <ShortCutCard title="Delivery Note/Challan" />
